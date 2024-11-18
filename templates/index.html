@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>To-Do List</title>
+</head>
+<body>
+    <h1>To-Do List</h1>
+    <table border="1">
+        <tr>
+            <th>Task</th>
+            <th>Email</th>
+            <th>Priority</th>
+            <th>Action</th>
+        </tr>
+        {% for item in to_do_list %}
+        <tr>
+            <td>{{ item['task'] }}</td>
+            <td>{{ item['email'] }}</td>
+            <td>{{ item['priority'] }}</td>
+            <td>
+                <form action="/delete" method="POST">
+                    <input type="hidden" name="task" value="{{ item['task'] }}">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="4">No tasks yet!</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Add a New Task</h2>
+    <form action="/submit" method="POST">
+        <label for="task">Task:</label>
+        <input type="text" name="task" id="task" required><br><br>
+
+        <label for="email">Email:</label>
+        <input type="email" name="email" id="email" required><br><br>
+
+        <label for="priority">Priority:</label>
+        <select name="priority" id="priority" required>
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+        </select><br><br>
+
+        <button type="submit">Add To-Do Item</button>
+    </form>
+
+    <!-- Clear List Button -->
+    <form action="/clear" method="POST">
+        <button type="submit">Clear</button>
+    </form>
+
+    <form action="/save" method="POST">
+        <button type="submit">Save</button>
+    </form>
+</body>
+</html>
+
